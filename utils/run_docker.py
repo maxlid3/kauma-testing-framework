@@ -8,8 +8,6 @@ from pathlib import Path
 from .print_table import *
 
 # TODO:
-#   - Handling von stdout und stderr für das framework
-#   - return-Werte definieren
 #   - Alle testcases im selben Docker-Container durchführen?
 
 def create_tar(src_path: str, testcase_list: list):
@@ -34,7 +32,7 @@ def stop_and_rm_container(container_id: str):
     subprocess.run(["docker", "rm", container_id], check=True, capture_output=True)
 
 
-def run_docker(kauma_path: str, testcase_list: list):
+def run_docker(kauma_path: str, testcase_list: list, debug: bool = False):
     tar_path, tmpdir = create_tar(kauma_path, testcase_list)
     container_id = start_container()
 
@@ -64,6 +62,11 @@ def run_docker(kauma_path: str, testcase_list: list):
         duration = time.time() - start
         process.wait()
         update_time(str(round(duration, 3)) + 's')
+
+        if debug:
+            add_debug_case()
+    if debug:
+        print_debug()
 
     # Stop and rm containers
     stop_and_rm_container(container_id)

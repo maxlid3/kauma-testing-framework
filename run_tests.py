@@ -20,7 +20,7 @@ def gen_testcase_list():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='kauma-testing-framework')
     parser.add_argument('kauma_path', help='Path of your kauma file')
-    # parser.add_argument('-d', '--debug', action='store_true', help='Activate extended debug mode')
+    parser.add_argument('-d', '--debug', action='store_true', help='Activate extended debug mode')
     
     try:
         args = parser.parse_args()
@@ -33,4 +33,7 @@ if __name__ == "__main__":
     testcase_list = gen_testcase_list()
     kauma_path = Path(args.kauma_path)
 
-    run_docker(kauma_path, testcase_list)
+    if args.debug:
+        run_docker(kauma_path, testcase_list, True)
+    else:
+        run_docker(kauma_path, testcase_list)

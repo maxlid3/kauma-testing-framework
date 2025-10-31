@@ -17,8 +17,11 @@ line_count = 0
 
 case_index = 0
 passed_count = 0
-failed_count = 0
+failed_list = []
+missing_list = []
 case_list = []
+
+debug_str = ''
 
 name_str = ''
 cases_str = ''
@@ -43,7 +46,8 @@ def init_table_case(file_path: Path):
 
     global case_index
     global passed_count
-    global failed_count
+    global failed_list
+    global missing_list
     global case_list
 
     global name_str
@@ -60,7 +64,8 @@ def init_table_case(file_path: Path):
 
     case_index = 0
     passed_count = 0
-    failed_count = 0
+    failed_list = []
+    missing_list = []
     case_list = get_case_list()
 
     name_str = file_name.ljust(MAX_NAME_LEN)
@@ -81,7 +86,8 @@ def update_case(output: str):
 
     global case_index
     global passed_count
-    global failed_count
+    global failed_list
+    global missing_list
     global case_list
 
     global name_str
@@ -93,13 +99,14 @@ def update_case(output: str):
     output_id = output_obj['id']
     output_reply = output_obj['reply']
 
+
     found = False
     while found == False:
         if case_index == (case_count):
-            print("Moin")
             return None
         elif output_id != case_list[case_index]:
             case_index += 1
+            missing_list += case_list[case_index]
             continue
         else:
             found = True
@@ -110,7 +117,7 @@ def update_case(output: str):
         else:
             new_str = LINE_RED + '-' + LINE_COLOR_END
     
-    case_str_index = case_index + (passed_count + failed_count) * 9
+    case_str_index = case_index + (passed_count + len(failed_list)) * 9
     if line_count == 1:
         if new_str == (LINE_GREEN + '+' + LINE_COLOR_END):
             if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_GREEN + '+' + LINE_COLOR_END):
@@ -125,15 +132,15 @@ def update_case(output: str):
         if new_str == (LINE_RED + '-' + LINE_COLOR_END):
             if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_RED + '-' + LINE_COLOR_END):
                 new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                failed_count += 1
+                failed_list.append('\'' + output_id + '\'')
                 case_index += 1
             else:
                 new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                failed_count += 1
+                failed_list.append('\'' + output_id + '\'')
                 case_index += 1
 
         cases_str = new_cases_str
-        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + '(' + str(case_count - (passed_count + failed_count)) + ')'
+        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + '(' + str(len(missing_list)) + ')'
         print(LINE_CLEAR, end='\r', flush=True)
         print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
     else:
@@ -160,3 +167,23 @@ def update_time(time: str):
         # Hier nächten Fall
         #
         print("Moin")
+
+def add_debug_case():
+    global name_str
+    global failed_list
+    global missing_list
+
+    global debug_str
+
+    name = name_str.strip()
+    debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(failed_list)) if missing_list else 'None'}'
+
+def print_debug():
+    print('-' * 123, flush=True)
+    print(debug_str, flush=True)
+
+"""
+calc_testcase.json:
+    Failed:  'test1', 'test33'
+    Missing: 'test2'
+"""
