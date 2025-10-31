@@ -1,4 +1,3 @@
-import sys
 import time
 import tarfile
 import tempfile
@@ -6,17 +5,19 @@ import subprocess
 import shutil
 from pathlib import Path
 
+from .print_table import *
+
 # TODO:
 #   - Handling von stdout und stderr für das framework
 #   - return-Werte definieren
 #   - Alle testcases im selben Docker-Container durchführen?
 
-def create_tar(src_path: str, testcase_list):
+def create_tar(src_path: str, testcase_list: list):
     tmpdir = tempfile.mkdtemp()
     tar_path = Path(tmpdir) / "kauma.tar.gz"
 
     with tarfile.open(tar_path, "w:gz") as tar:
-        for item in Path(src_path).iterdir():
+        for item in Path(src_path).parent.iterdir():
             tar.add(str(item), arcname=item.name)
 
         for item in testcase_list:
@@ -25,7 +26,7 @@ def create_tar(src_path: str, testcase_list):
     return tar_path, tmpdir
 
 def start_container():
-    container_id = subprocess.check_output(["docker", "run", "-dit", "labwork", "sleep", "infinity"], test=True).strip()
+    container_id = subprocess.check_output(["docker", "run", "-dit", "labwork", "sleep", "infinity"], text=True).strip()
     return container_id
 
 def stop_and_rm_container(container_id: str):
@@ -34,7 +35,7 @@ def stop_and_rm_container(container_id: str):
 
 
 def run_docker(kauma_path: str, testcase_list: list):
-    tar_path, tmpdir = create_tar(kauma_path)
+    tar_path, tmpdir = create_tar(kauma_path, testcase_list)
     container_id = start_container()
 
     # Copy tar archive into the container
@@ -49,11 +50,19 @@ def run_docker(kauma_path: str, testcase_list: list):
 
     # Run the testcases and measure the time for each testcase
     for case in testcase_list:
+        print_header()
+        init_table_case(Path(case))
+
         start = time.time()
-        
-        result = subprocess.run(["docker", "exec", container_id, "bash", "-c", f"./kauma {case}"], check=True, capture_output=True)
+
+        command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+
+        for line in process.stdout:
+            update_case(line)
 
         duration = time.time() - start
+        update_time(duration)
 
     # Stop and rm containers
     stop_and_rm_container(container_id)

@@ -1,0 +1,87 @@
+{
+  "testcases": {
+    "default_add": {
+      "action": "calc",
+      "arguments": {
+        "lhs": 48,
+        "op": "+",
+        "rhs": 21
+      }
+    },
+    "default_sub": {
+      "action": "calc",
+      "arguments": {
+        "lhs": -48,
+        "op": "-",
+        "rhs": 21
+      }
+    },
+    "default_mult": {
+      "action": "calc",
+      "arguments": {
+        "lhs": 7,
+        "op": "*",
+        "rhs": 191
+      }
+    },
+    "big_add": {
+      "action": "calc",
+      "arguments": {
+        "lhs": "0x518008518008",
+        "op": "+",
+        "rhs": -5341192
+      }
+    },
+    "big_sub": {
+      "action": "calc",
+      "arguments": {
+        "lhs": "0x518008518008",
+        "op": "-",
+        "rhs": 5341192
+      }
+    },
+    "big_mult": {
+      "action": "calc",
+      "arguments": {
+        "lhs": 6700417,
+        "op": "*",
+        "rhs": "0x22d910b146f"
+      }
+    },
+    "big_div": {
+      "action": "calc",
+      "arguments": {
+        "lhs": "0x3d71808a70f04cff70",
+        "op": "/",
+        "rhs": 5341192
+      }
+    },
+    "edge_div": {
+      "action": "calc",
+      "arguments": {
+        "lhs": -8,
+        "op": "/",
+        "rhs": 6
+      }
+    },
+    "big_edge_div": {
+      "action": "calc",
+      "arguments": {
+        "lhs": "0xe03508e8e335ea00e636cb180902a3480902a34728cd9a5f25ccb94722cbd83",
+        "op": "/",
+        "rhs": "0xBAAAAAADBAAAAAADBAAAAAAD"
+      }
+    }
+  },
+  "expectedResults": {
+    "default_add": { "answer": 69 },
+    "default_sub": { "answer": -69 },
+    "default_mult": { "answer": 1337 },
+    "big_add": { "answer": "0x518008000000" },
+    "big_sub": { "answer": "0x518008000000" },
+    "big_mult": { "answer": "0xdeadbeefdeadbeef" },
+    "big_div": { "answer": "0xc0ffeec0ffee" },
+    "edge_div": { "answer": -1 },
+    "big_edge_div": { "answer": "0x1337BEEF1337BEEF1337BEEF1337BEEF1337BEEF" }
+  }
+}
