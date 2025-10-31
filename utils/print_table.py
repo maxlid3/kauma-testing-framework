@@ -16,6 +16,8 @@ case_count = 0
 line_count = 0
 
 case_index = 0
+passed_count = 0
+failed_count = 0
 case_list = []
 
 name_str = ''
@@ -33,13 +35,15 @@ def check_result():
     return 0
 
 def print_header():
-    print('Name'.center(35)  + '|' + 'Cases'.center(50) + '|' + 'Time'.center(8) + '|' + ' Successful/Total', flush=True)
+    print('Name'.center(35)  + '|' + 'Cases'.center(50) + '|' + 'Time'.center(8) + '|' + ' Successful/Total (Missing)', flush=True)
 
 def init_table_case(file_path: Path):
     global case_count
     global line_count
 
     global case_index
+    global passed_count
+    global failed_count
     global case_list
 
     global name_str
@@ -55,27 +59,31 @@ def init_table_case(file_path: Path):
     line_count = (case_count // MAX_CASES_LEN) + 1
 
     case_index = 0
+    passed_count = 0
+    failed_count = 0
     case_list = get_case_list()
 
     name_str = file_name.ljust(MAX_NAME_LEN)
     time_str = ''.ljust(8)
-    success_str = ' ' + '0' + '/' + f'{case_count}'
+    success_str = ' ' + '0' + '/' + f'{case_count}' + '(' + '0' + ')'
     if line_count == 1:
-        cases_str = ('['+ ('·' * case_count) + '] ').ljust(MAX_CASES_LEN + 2)
+        cases_str = ('['+ ('·' * case_count) + ']').ljust(MAX_CASES_LEN + 2)
 
     #
     # Hier nächsten Fall
     #
 
-    print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='', flush=True)
+    print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
 
 def update_case(output: str):
     global case_count
     global line_count
 
     global case_index
+    global passed_count
+    global failed_count
     global case_list
-    
+
     global name_str
     global cases_str
     global time_str
@@ -87,7 +95,8 @@ def update_case(output: str):
 
     found = False
     while found == False:
-        if case_index == (case_count - 1):
+        if case_index == (case_count):
+            print("Moin")
             return None
         elif output_id != case_list[case_index]:
             case_index += 1
@@ -100,12 +109,33 @@ def update_case(output: str):
             new_str = LINE_GREEN + '+' + LINE_COLOR_END
         else:
             new_str = LINE_RED + '-' + LINE_COLOR_END
-
+    
+    case_str_index = case_index + (passed_count + failed_count) * 9
     if line_count == 1:
-        new_cases_str = cases_str[:1 + case_index - 1] + new_str + cases_str[1 + case_index:]
+        if new_str == (LINE_GREEN + '+' + LINE_COLOR_END):
+            if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_GREEN + '+' + LINE_COLOR_END):
+                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
+                passed_count += 1
+                case_index += 1
+            else:
+                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
+                passed_count += 1
+                case_index += 1
+
+        if new_str == (LINE_RED + '-' + LINE_COLOR_END):
+            if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_RED + '-' + LINE_COLOR_END):
+                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
+                failed_count += 1
+                case_index += 1
+            else:
+                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
+                failed_count += 1
+                case_index += 1
+
         cases_str = new_cases_str
-        print(LINE_CLEAR, end='', flush=True)
-        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='', flush=True)
+        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + '(' + str(case_count - (passed_count + failed_count)) + ')'
+        print(LINE_CLEAR, end='\r', flush=True)
+        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
     else:
         #
         # Hier nächsten Fall
@@ -120,11 +150,11 @@ def update_time(time: str):
     global time_str
     global success_str
 
-    time_str = time.ljust(8)
+    time_str = time.center(8)
 
     if line_count == 1:
         print(LINE_CLEAR, end='', flush=True)
-        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='', flush=True)
+        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
     else:
         #
         # Hier nächten Fall

@@ -62,7 +62,8 @@ def run_docker(kauma_path: str, testcase_list: list):
             update_case(line)
 
         duration = time.time() - start
-        update_time(duration)
+        process.wait()
+        update_time(str(round(duration, 3)) + 's')
 
     # Stop and rm containers
     stop_and_rm_container(container_id)
