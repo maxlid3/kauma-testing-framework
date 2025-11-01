@@ -26,7 +26,6 @@ case_list = []
 debug_str = ''
 
 name_str = ''
-cases_str = ''#################
 cases_str_list = []
 time_str = ''
 success_str = ''
@@ -110,7 +109,6 @@ def update_case(output: str):
     global case_list
 
     global name_str
-    global cases_str##############
     global cases_str_list
     global time_str
     global success_str
@@ -125,7 +123,7 @@ def update_case(output: str):
         if case_index == (case_count):
             return None
         elif output_id != case_list[case_index]:
-            missing_list += case_list[case_index]
+            missing_list.append(case_list[case_index])
             case_index += 1
             continue
         else:
@@ -182,6 +180,7 @@ def update_time(time: str):
     global success_str
 
     time_str = time.center(8)
+    success_str = ' ' + (f'{passed_count}' + '/' + f'{case_count}').ljust(9) + ' ' + f'{round(((passed_count / case_count) * 100), 2)}%'.ljust(7) + ' ' + '(' + str(len(missing_list)) + ')'
 
     print(LINE_UP * line_count, end='\r', flush=True)
     print(LINE_CLEAR + name_str + ' ' + cases_str_list[0] + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
@@ -197,7 +196,7 @@ def add_debug_case():
     global debug_str
 
     name = name_str.strip()
-    debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(failed_list)) if missing_list else 'None'}\n'
+    debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(missing_list)) if missing_list else 'None'}\n'
 
 def print_debug():
     print('-' * 125, flush=True)

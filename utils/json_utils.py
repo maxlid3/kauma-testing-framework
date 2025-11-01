@@ -15,7 +15,7 @@ def count_testcases():
     return len(json_obj['testcases'].keys())
 
 def get_case_list():
-    return list(json_obj['expectedResults'].keys())
+    return list(json_obj['testcases'].keys())
 
 def get_case_result(id: str):
     return json_obj['expectedResults'][id]

@@ -1,7 +1,7 @@
 # kauma-testing-framework
 This is a testing framework for the TINF23CS course 'Cryptanalysis. Some testcases are provided, but you can add your own testcases at any time.
 
-This repository is directly part of my kauma-project. That's why I will **not accept any external contributions** to my code, since only my own work shall be graded.<br>
+This repository is directly part of my kauma-project. That's why I will **not accept any external contributions** to my code, since only my own work shall be graded. You can still submit issues, I will fix them.<br>
 But you can feel free using my testing-framework and modifying it for your own needs.
 
 This testing-framework works for **Python implementations** on **Windows and Linux**. This framework does **not support compiled programming languages**.
@@ -44,7 +44,10 @@ The folder `testcases` has my own testcases, which I maintain. You can add your 
 
 ## Features
 ### Visual representation of case results
-WIP
+![](https://i.imgur.com/eE76qYJ.png)
+
+
+![](https://i.imgur.com/iq30Ib8.png)
 
 ### Debug-mode for debugging of testcases
-WIP
+![](https://i.imgur.com/2yvgmZ1.png)
