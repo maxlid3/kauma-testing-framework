@@ -40,7 +40,7 @@ options:
 ```
 
 ## Adding own testcases
-The folder `testcases` has my own testcases, which I maintain. You can add your own testcases in the `ext_testcases` folder. The order of execution is `testcases` > `ext_testcases`.
+The folder `testcases` has my own testcases, which I maintain. You can add your own testcases in the `ext_testcases` folder. The order of execution is `testcases` > `ext_testcases`. Make sure your testcases have `'expectedResults'` and use [this JSON-scheme](https://github.com/Sarsum/TINF23CS-kauma-tests/blob/main/schema.json) from [Sarsum/TINF23CS-kauma-tests](https://github.com/Sarsum/TINF23CS-kauma-tests/blob/main/schema.json).
 
 ## Features
 ### Visual representation of case results
