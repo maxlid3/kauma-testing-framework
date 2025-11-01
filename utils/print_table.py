@@ -20,6 +20,7 @@ line_index = 0
 passed_count = 0
 failed_list = []
 missing_list = []
+prev_sum_of_symbols = 0
 case_list = []
 
 debug_str = ''
@@ -51,6 +52,7 @@ def init_table_case(file_path: Path):
     global passed_count
     global failed_list
     global missing_list
+    global prev_sum_of_symbols
     global case_list
 
     global name_str
@@ -66,15 +68,17 @@ def init_table_case(file_path: Path):
     line_count = (case_count // MAX_CASES_LEN) + 1
 
     case_index = 0
+    line_index = 0
     passed_count = 0
     failed_list = []
     missing_list = []
+    prev_sum_of_symbols = 0
     case_list = get_case_list()
 
     name_str = file_name.ljust(MAX_NAME_LEN)
     time_str = ''.ljust(8)
     cases_str_list = []
-    success_str = ' ' + '0' + '/' + f'{case_count}' + ' ' + '0.00%' + ' ' + '(' + '0' + ')'
+    success_str = ' ' + ('0' + '/' + f'{case_count}').ljust(9) + ' ' + '0.00%'.ljust(7) + ' ' + '(' + '0' + ')'
     if line_count == 1:
         cases_str_list.append(('['+ ('·' * case_count) + ']').ljust(MAX_CASES_LEN + 2))
     if line_count > 1:
@@ -93,9 +97,6 @@ def init_table_case(file_path: Path):
             print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
 
 
-#
-# Die Funktion noch komplett abändern
-#
 def update_case(output: str):
     global case_count
     global line_count
@@ -105,6 +106,7 @@ def update_case(output: str):
     global passed_count
     global failed_list
     global missing_list
+    global prev_sum_of_symbols
     global case_list
 
     global name_str
@@ -123,8 +125,8 @@ def update_case(output: str):
         if case_index == (case_count):
             return None
         elif output_id != case_list[case_index]:
-            case_index += 1
             missing_list += case_list[case_index]
+            case_index += 1
             continue
         else:
             found = True
@@ -135,37 +137,41 @@ def update_case(output: str):
         else:
             new_str = LINE_RED + '-' + LINE_COLOR_END
     
-    case_str_index = case_index + (passed_count + len(failed_list)) * 9
-    if line_count == 1:
-        if new_str == (LINE_GREEN + '+' + LINE_COLOR_END):
-            if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_GREEN + '+' + LINE_COLOR_END):
-                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                passed_count += 1
-                case_index += 1
-            else:
-                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                passed_count += 1
-                case_index += 1
 
-        if new_str == (LINE_RED + '-' + LINE_COLOR_END):
-            if cases_str[1 + case_str_index - 10:1 + case_str_index] == (LINE_RED + '-' + LINE_COLOR_END):
-                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                failed_list.append('\'' + output_id + '\'')
-                case_index += 1
-            else:
-                new_cases_str = cases_str[:1 + case_str_index] + new_str + cases_str[1 + case_str_index + 1:]
-                failed_list.append('\'' + output_id + '\'')
-                case_index += 1
+    line_index = (case_index) // MAX_CASES_LEN
+    case_str_index = (case_index - (line_index * MAX_CASES_LEN)) + (((passed_count + len(failed_list)) * 9) - prev_sum_of_symbols)
 
-        cases_str = new_cases_str
-        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + f'{round(((passed_count / case_count) * 100), 2)}%' + ' ' + '(' + str(len(missing_list)) + ')'
-        print(LINE_CLEAR, end='\r', flush=True)
-        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
-    else:
-        #
-        # Hier nächsten Fall
-        #
-        print(end='')
+    if new_str == (LINE_GREEN + '+' + LINE_COLOR_END):
+        if cases_str_list[line_index][1 + case_str_index - 10:1 + case_str_index] == (LINE_GREEN + '+' + LINE_COLOR_END):
+            new_cases_str = cases_str_list[line_index][:1 + case_str_index] + new_str + cases_str_list[line_index][1 + case_str_index + 1:]
+            passed_count += 1
+            case_index += 1
+        else:
+            new_cases_str = cases_str_list[line_index][:1 + case_str_index] + new_str + cases_str_list[line_index][1 + case_str_index + 1:]
+            passed_count += 1
+            case_index += 1
+
+    if new_str == (LINE_RED + '-' + LINE_COLOR_END):
+        if cases_str_list[line_index][1 + case_str_index - 10:1 + case_str_index] == (LINE_RED + '-' + LINE_COLOR_END):
+            new_cases_str = cases_str_list[line_index][:1 + case_str_index] + new_str + cases_str_list[line_index][1 + case_str_index + 1:]
+            failed_list.append('\'' + output_id + '\'')
+            case_index += 1
+        else:
+            new_cases_str = cases_str_list[line_index][:1 + case_str_index] + new_str + cases_str_list[line_index][1 + case_str_index + 1:]
+            failed_list.append('\'' + output_id + '\'')
+            case_index += 1
+
+    cases_str_list[line_index] = new_cases_str
+    success_str = ' ' + (f'{passed_count}' + '/' + f'{case_count}').ljust(9) + ' ' + f'{round(((passed_count / case_count) * 100), 2)}%'.ljust(7) + ' ' + '(' + str(len(missing_list)) + ')'
+    
+    print(LINE_UP * line_count, end='\r', flush=True)
+    print(LINE_CLEAR + name_str + ' ' + cases_str_list[0] + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
+
+    for i in range(1, len(cases_str_list[1:]) + 1):
+        print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
+
+    if case_index % 48 == 0:
+        prev_sum_of_symbols = (passed_count + len(failed_list)) * 9
 
 def update_time(time: str):
     global line_count
@@ -177,14 +183,11 @@ def update_time(time: str):
 
     time_str = time.center(8)
 
-    if line_count == 1:
-        print(LINE_CLEAR, end='', flush=True)
-        print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
-    else:
-        #
-        # Hier nächten Fall
-        #
-        print(end='')
+    print(LINE_UP * line_count, end='\r', flush=True)
+    print(LINE_CLEAR + name_str + ' ' + cases_str_list[0] + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
+
+    for i in range(1, len(cases_str_list[1:]) + 1):
+        print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
 
 def add_debug_case():
     global name_str

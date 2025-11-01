@@ -7,9 +7,6 @@ from pathlib import Path
 
 from .print_table import *
 
-# TODO:
-#   - Alle testcases im selben Docker-Container durchführen?
-
 def create_tar(src_path: str, testcase_list: list):
     tmpdir = tempfile.mkdtemp()
     tar_path = Path(tmpdir) / "kauma.tar.gz"
