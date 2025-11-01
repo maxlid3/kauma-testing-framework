@@ -82,6 +82,6 @@
     "big_mult": { "answer": "0xdeadbeefdeadbeef" },
     "big_div": { "answer": "0xc0ffeec0ffee" },
     "edge_div": { "answer": -1 },
-    "big_edge_div": { "answer": "0x1337BEEF1337BEEF1337BEEF1337BEEF1337BEEF" }
+    "big_edge_div": { "answer": "0x1337beef1337beef1337beef1337beef1337beef" }
   }
 }
