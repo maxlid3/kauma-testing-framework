@@ -1,5 +1,6 @@
 import sys
 import argparse
+import platform
 from pathlib import Path
 
 from utils import run_docker
@@ -33,7 +34,8 @@ if __name__ == "__main__":
     testcase_list = gen_testcase_list()
     kauma_path = Path(args.kauma_path)
 
-    if args.debug:
-        run_docker(kauma_path, testcase_list, True)
-    else:
-        run_docker(kauma_path, testcase_list)
+    os_windows = False
+    if platform.system() == "Windows":
+        os_windows = True
+    
+    run_docker(kauma_path, testcase_list, args.debug, os_windows)

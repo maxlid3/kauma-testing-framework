@@ -38,7 +38,7 @@ def check_result():
     return 0
 
 def print_header():
-    print('Name'.center(35)  + '|' + 'Cases'.center(50) + '|' + 'Time'.center(8) + '|' + ' Successful/Total (Missing)', flush=True)
+    print('Name'.center(35)  + '|' + 'Cases'.center(50) + '|' + 'Time'.center(8) + '|' + ' Successful/Total % (Missing)', flush=True)
 
 def init_table_case(file_path: Path):
     global case_count
@@ -70,7 +70,7 @@ def init_table_case(file_path: Path):
 
     name_str = file_name.ljust(MAX_NAME_LEN)
     time_str = ''.ljust(8)
-    success_str = ' ' + '0' + '/' + f'{case_count}' + '(' + '0' + ')'
+    success_str = ' ' + '0' + '/' + f'{case_count}' + ' ' + '0.00%' + ' ' + '(' + '0' + ')'
     if line_count == 1:
         cases_str = ('['+ ('·' * case_count) + ']').ljust(MAX_CASES_LEN + 2)
 
@@ -140,7 +140,7 @@ def update_case(output: str):
                 case_index += 1
 
         cases_str = new_cases_str
-        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + '(' + str(len(missing_list)) + ')'
+        success_str = ' ' + f'{passed_count}' + '/' + f'{case_count}' + ' ' + f'{round(((passed_count / case_count) * 100), 2)}%' + ' ' + '(' + str(len(missing_list)) + ')'
         print(LINE_CLEAR, end='\r', flush=True)
         print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
     else:
@@ -179,7 +179,7 @@ def add_debug_case():
     debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(failed_list)) if missing_list else 'None'}'
 
 def print_debug():
-    print('-' * 123, flush=True)
+    print('-' * 125, flush=True)
     print(debug_str, flush=True)
 
 """

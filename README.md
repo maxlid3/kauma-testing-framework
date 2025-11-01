@@ -25,3 +25,26 @@ Running the labwork-container will be done by the testing-framework itself.
 </details>
 
 ## Quick Guide
+```
+usage: python run_tests.py [-h] [-d] kauma_path
+
+kauma-testing-framework
+
+positional arguments:
+  kauma_path   Path of your kauma file
+
+options:
+  -h, --help   show this help message and exit
+  -d, --debug  Activate extended debug mode
+
+```
+
+## Adding own testcases
+The folder `testcases` has my own testcases, which I maintain. You can add your own testcases in the `ext_testcases` folder.
+
+## Features
+### Visual representation of case results
+WIP
+
+### Debug-mode for debugging of testcases
+WIP

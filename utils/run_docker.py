@@ -32,7 +32,7 @@ def stop_and_rm_container(container_id: str):
     subprocess.run(["docker", "rm", container_id], check=True, capture_output=True)
 
 
-def run_docker(kauma_path: str, testcase_list: list, debug: bool = False):
+def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, os_windows: bool = False):
     tar_path, tmpdir = create_tar(kauma_path, testcase_list)
     container_id = start_container()
 
@@ -45,6 +45,9 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False):
     # Unzip tar archive in container and delete afterwards
     subprocess.run(["docker", "exec", container_id, "tar", "-xzf", "/kauma.tar.gz", "-C", "."],check=True)
     subprocess.run(["docker", "exec", container_id, "rm", "kauma.tar.gz"],check=True)
+    
+    if os_windows:
+        subprocess.run(["docker", "exec", container_id, "chmod", "+x", "./kauma"],check=True)
 
     # Run the testcases and measure the time for each testcase
     for case in testcase_list:
