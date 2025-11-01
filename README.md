@@ -1,5 +1,5 @@
 # kauma-testing-framework
-This is a testing framework for the TINF23CS course 'Cryptanalysis. Some testcases are provided, but you can add your own testcases at any time.
+This is a testing framework for the TINF23CS course 'Cryptanalysis'. Some testcases are provided, but you can add your own testcases at any time. The kauma-project is tested inside the course-provided 'labwork' Docker-container, which you will need to download before using the testing-framework.
 
 This repository is directly part of my kauma-project. That's why I will **not accept any external contributions** to my code, since only my own work shall be graded. You can still submit issues, I will fix them.<br>
 But you can feel free using my testing-framework and modifying it for your own needs.
@@ -40,7 +40,7 @@ options:
 ```
 
 ## Adding own testcases
-The folder `testcases` has my own testcases, which I maintain. You can add your own testcases in the `ext_testcases` folder.
+The folder `testcases` has my own testcases, which I maintain. You can add your own testcases in the `ext_testcases` folder. The order of execution is `testcases` > `ext_testcases`.
 
 ## Features
 ### Visual representation of case results
@@ -51,3 +51,6 @@ The folder `testcases` has my own testcases, which I maintain. You can add your 
 
 ### Debug-mode for debugging of testcases
 ![](https://i.imgur.com/2yvgmZ1.png)
+
+## Known issues
+- If the framework crashes mid-execution, the Docker container may still be up and running and use ressources. So keep an eye on your running Docker containers. If you come across a framework crash, please open an issue-ticket.
