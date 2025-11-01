@@ -50,8 +50,8 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, os_win
         subprocess.run(["docker", "exec", container_id, "chmod", "+x", "./kauma"],check=True)
 
     # Run the testcases and measure the time for each testcase
+    print_header()
     for case in testcase_list:
-        print_header()
         init_table_case(Path(case))
 
         start = time.time()

@@ -16,6 +16,7 @@ case_count = 0
 line_count = 0
 
 case_index = 0
+line_index = 0
 passed_count = 0
 failed_list = []
 missing_list = []
@@ -24,7 +25,8 @@ case_list = []
 debug_str = ''
 
 name_str = ''
-cases_str = ''
+cases_str = ''#################
+cases_str_list = []
 time_str = ''
 success_str = ''
 
@@ -45,13 +47,14 @@ def init_table_case(file_path: Path):
     global line_count
 
     global case_index
+    global line_index
     global passed_count
     global failed_list
     global missing_list
     global case_list
 
     global name_str
-    global cases_str
+    global cases_str_list
     global time_str
     global success_str
 
@@ -70,28 +73,43 @@ def init_table_case(file_path: Path):
 
     name_str = file_name.ljust(MAX_NAME_LEN)
     time_str = ''.ljust(8)
+    cases_str_list = []
     success_str = ' ' + '0' + '/' + f'{case_count}' + ' ' + '0.00%' + ' ' + '(' + '0' + ')'
     if line_count == 1:
-        cases_str = ('['+ ('·' * case_count) + ']').ljust(MAX_CASES_LEN + 2)
+        cases_str_list.append(('['+ ('·' * case_count) + ']').ljust(MAX_CASES_LEN + 2))
+    if line_count > 1:
+        for line in range(line_count):
+            if line == 0:
+                cases_str_list.append('┌' + ('·' * MAX_CASES_LEN) + '┐')
+            elif line == (line_count - 1):
+                cases_str_list.append('└' + (('·' * (case_count - (line * MAX_CASES_LEN))).ljust(MAX_CASES_LEN)) + '┘')
+            else:
+                cases_str_list.append('│' + ('·' * MAX_CASES_LEN) + '│')
+    
+    print(name_str + ' ' + cases_str_list[0] + ' ' + time_str + ' ' + success_str, end='\n', flush=True)
+    
+    if len(cases_str_list) > 1:
+        for i in range(1, len(cases_str_list[1:]) + 1):
+            print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
 
-    #
-    # Hier nächsten Fall
-    #
 
-    print(name_str + ' ' + cases_str + ' ' + time_str + ' ' + success_str, end='\r', flush=True)
-
+#
+# Die Funktion noch komplett abändern
+#
 def update_case(output: str):
     global case_count
     global line_count
 
     global case_index
+    global line_index
     global passed_count
     global failed_list
     global missing_list
     global case_list
 
     global name_str
-    global cases_str
+    global cases_str##############
+    global cases_str_list
     global time_str
     global success_str
 
@@ -147,7 +165,7 @@ def update_case(output: str):
         #
         # Hier nächsten Fall
         #
-        print("Moin")
+        print(end='')
 
 def update_time(time: str):
     global line_count
@@ -166,7 +184,7 @@ def update_time(time: str):
         #
         # Hier nächten Fall
         #
-        print("Moin")
+        print(end='')
 
 def add_debug_case():
     global name_str
@@ -176,14 +194,8 @@ def add_debug_case():
     global debug_str
 
     name = name_str.strip()
-    debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(failed_list)) if missing_list else 'None'}'
+    debug_str += f'{name}:\n    Failed:  {(', '.join(failed_list)) if failed_list else 'None'}\n    Missing: {(', '.join(failed_list)) if missing_list else 'None'}\n'
 
 def print_debug():
     print('-' * 125, flush=True)
     print(debug_str, flush=True)
-
-"""
-calc_testcase.json:
-    Failed:  'test1', 'test33'
-    Missing: 'test2'
-"""
