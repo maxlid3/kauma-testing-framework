@@ -36,6 +36,9 @@ def start_container(docker_debug: bool = False):
             stop_and_rm_container(container_id, docker_debug)
         else:
             print("Docker container may still be running. Please stop and remove the container manually.")
+    except Exception:
+        print("Error starting Docker-container. Please make sure Docker is running/installed!")
+        sys.exit(1)
 
 
 def stop_and_rm_container(container_id: str, docker_debug: bool = False):
@@ -52,6 +55,7 @@ def stop_and_rm_container(container_id: str, docker_debug: bool = False):
 
 
 def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
+    container_id = None
     try:
         try:
             container_id = start_container(docker_debug)
@@ -103,7 +107,8 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
     except KeyboardInterrupt:
         print("Received KeyboardInterrupt, stopping and removing containers...")
     finally:
-        stop_and_rm_container(container_id, docker_debug)
+        if container_id is not None:
+            stop_and_rm_container(container_id, docker_debug)
         sys.exit(1)
 
     
