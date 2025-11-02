@@ -1,0 +1,40 @@
+{
+  "testcases": {
+    "short_plaintext": {
+        "action": "padding_oracle",
+        "arguments": {
+            "hostname": "host.docker.internal",
+            "port": 12345,
+            "key_id": 1,
+            "iv": "SVZJVklWSVZJVklWSVZJVg==",
+            "ciphertext": "y8edit2xE2SpG+kSGJUv/A=="
+        }
+    },
+    "long_plaintext": {
+        "action": "padding_oracle",
+        "arguments": {
+            "hostname": "host.docker.internal",
+            "port": 12345,
+            "key_id": 2,
+            "iv": "SVZJVklWSVZJVklWSVZJVg==",
+            "ciphertext": "vDDEKlXhq1XxvtaTuKGxaIAPJqMGuA42h6yvoXY6gRI="
+        }
+    },
+    "super_long_plaintext": {
+        "action": "padding_oracle",
+        "arguments": {
+            "hostname": "host.docker.internal",
+            "port": 12345,
+            "key_id": 3,
+            "iv": "SVZJVklWSVZJVklWSVZJVg==",
+            "ciphertext": "XhzWPertBMNrtSXzLV3p/TSvN2wVBjl20fn2vXpu2Ll0TfN3QuW5Ui1H4/Hl0hiF"
+        }
+    }
+  },
+  "expectedResults":
+  {
+    "short_plaintext": { "plaintext": "RWluIFBsYWludGV4dAMDAw==" },
+    "long_plaintext": { "plaintext": "RWluIHN1cGVyIGxhbmdlciBQbGFpbnRleHQGBgYGBgY="},
+    "super_long_plaintext": { "plaintext": "RWluIHN1dXV1dXV1dXV1dXBlciBsYW5nZXIgUGxhaW50ZXh0DAwMDAwMDAwMDAwM" }
+  }
+}
