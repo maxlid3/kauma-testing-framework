@@ -89,6 +89,9 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             for line in process.stdout:
                 update_case(line)
 
+            # If all or the last cases are missing, one more update is needed
+            update_case("{ \"id\": null, \"reply\": null }")
+
             duration = time.time() - start
             process.wait()
             update_time(str(round(duration, 3)) + 's')

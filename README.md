@@ -53,4 +53,6 @@ The folder `testcases` has my own testcases, which I maintain. You can add your 
 ![](https://i.imgur.com/2yvgmZ1.png)
 
 ## Known issues
-- If the framework crashes mid-execution, the Docker container may still be up and running and use ressources. So keep an eye on your running Docker containers. If you come across a framework crash, please open an issue-ticket.
+- If the framework crashes or stops (through KeyboardInterrupt) mid-container-creation, the container will not be stopped and removed.
+
+If you come across a framework crash, please open an issue-ticket.

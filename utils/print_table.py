@@ -120,7 +120,7 @@ def update_case(output: str):
 
     found = False
     while found == False:
-        if case_index == (case_count):
+        if case_index >= case_count:
             return None
         elif output_id != case_list[case_index]:
             missing_list.append(case_list[case_index])
