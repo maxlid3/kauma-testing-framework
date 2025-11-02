@@ -1,3 +1,4 @@
+import sys
 import time
 import tarfile
 import tempfile
@@ -20,55 +21,86 @@ def create_tar(src_path: str, testcase_list: list):
 
     return tar_path, tmpdir
 
-def start_container():
-    container_id = subprocess.check_output(["docker", "run", "-dit", "labwork", "sleep", "infinity"], text=True).strip()
-    return container_id
+def start_container(docker_debug: bool = False):
+    container_id = None
+    try:
+        if docker_debug:
+            print("Starting Docker container 'labwork'...")
+        container_id = subprocess.check_output(["docker", "run", "-dit", "labwork", "sleep", "infinity"], text=True).strip()
+        if docker_debug:
+            print(f"Started Docker container with id '{container_id[:13]}...'.")
+        return container_id
+    except KeyboardInterrupt:
+        print("Received KeyboardInterrupt.")
+        if container_id is not None:
+            stop_and_rm_container(container_id, docker_debug)
+        else:
+            print("Docker container may still be running. Please stop and remove the container manually.")
 
-def stop_and_rm_container(container_id: str):
-    subprocess.run(["docker", "stop", container_id], check=True, capture_output=True)
-    subprocess.run(["docker", "rm", container_id], check=True, capture_output=True)
+
+def stop_and_rm_container(container_id: str, docker_debug: bool = False):
+    if container_id is not None:
+        if docker_debug:
+            print("Stopping and removing Docker container 'labwork'.")
+        subprocess.run(["docker", "stop", container_id], check=True, capture_output=True)
+        if docker_debug:
+            print(f"Stopped Docker container with id '{container_id[:13]}...'.")
+        subprocess.run(["docker", "rm", container_id], check=True, capture_output=True)
+        if docker_debug:
+            print(f"Removed Docker container with id '{container_id[:13]}...'.")
 
 
-def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, os_windows: bool = False):
-    tar_path, tmpdir = create_tar(kauma_path, testcase_list)
-    container_id = start_container()
 
-    # Copy tar archive into the container
-    subprocess.run(["docker", "cp", str(tar_path), f"{container_id}:/"], check=True, capture_output=True)
+def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
+    try:
+        try:
+            container_id = start_container(docker_debug)
+        except KeyboardInterrupt:
+            print("Received KeyboardInterrupt.")
+            stop_and_rm_container(container_id, docker_debug)
+            sys.exit(1)
 
-    # After copying, delete the tar archive on the host
-    shutil.rmtree(tmpdir)
 
-    # Unzip tar archive in container and delete afterwards
-    subprocess.run(["docker", "exec", container_id, "tar", "-xzf", "/kauma.tar.gz", "-C", "."],check=True)
-    subprocess.run(["docker", "exec", container_id, "rm", "kauma.tar.gz"],check=True)
-    
-    if os_windows:
-        subprocess.run(["docker", "exec", container_id, "chmod", "+x", "./kauma"],check=True)
+        tar_path, tmpdir = create_tar(kauma_path, testcase_list)
+        
+        # Copy tar archive into the container
+        subprocess.run(["docker", "cp", str(tar_path), f"{container_id}:/"], check=True, capture_output=True)
 
-    # Run the testcases and measure the time for each testcase
-    print_header()
-    for case in testcase_list:
-        init_table_case(Path(case))
+        # After copying, delete the tar archive on the host
+        shutil.rmtree(tmpdir)
 
-        start = time.time()
+        # Unzip tar archive in container and delete afterwards
+        subprocess.run(["docker", "exec", container_id, "tar", "-xzf", "/kauma.tar.gz", "-C", "."],check=True)
+        subprocess.run(["docker", "exec", container_id, "rm", "kauma.tar.gz"],check=True)
+        
+        if os_windows:
+            subprocess.run(["docker", "exec", container_id, "chmod", "+x", "./kauma"],check=True)
 
-        command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+        # Run the testcases and measure the time for each testcase
+        print_header()
+        for case in testcase_list:
+            init_table_case(Path(case))
 
-        for line in process.stdout:
-            update_case(line)
+            start = time.time()
 
-        duration = time.time() - start
-        process.wait()
-        update_time(str(round(duration, 3)) + 's')
+            command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
 
+            for line in process.stdout:
+                update_case(line)
+
+            duration = time.time() - start
+            process.wait()
+            update_time(str(round(duration, 3)) + 's')
+
+            if debug:
+                add_debug_case()
         if debug:
-            add_debug_case()
-    if debug:
-        print_debug()
-
-    # Stop and rm containers
-    stop_and_rm_container(container_id)
+            print_debug()
+    except KeyboardInterrupt:
+        print("Received KeyboardInterrupt, stopping and removing containers...")
+    finally:
+        stop_and_rm_container(container_id, docker_debug)
+        sys.exit(1)
 
     

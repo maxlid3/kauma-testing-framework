@@ -19,15 +19,15 @@ def gen_testcase_list():
     return testcase_list
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='kauma-testing-framework')
+    parser = argparse.ArgumentParser(usage='python %(prog)s kauma_path [options]', description='kauma-testing-framework')
     parser.add_argument('kauma_path', help='Path of your kauma file')
     parser.add_argument('-d', '--debug', action='store_true', help='Activate extended debug mode')
+    parser.add_argument('-dd', '--docker_debug', action='store_true', help='Enable debug messages for Docker commands')
     
     try:
         args = parser.parse_args()
     except SystemExit:
         print()
-        parser.print_help()
         sys.exit(1)
 
 
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     if platform.system() == "Windows":
         os_windows = True
     
-    run_docker(kauma_path, testcase_list, args.debug, os_windows)
+    run_docker(kauma_path, testcase_list, args.debug, args.docker_debug, os_windows)

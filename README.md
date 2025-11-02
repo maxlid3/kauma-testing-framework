@@ -26,17 +26,17 @@ Running the labwork-container will be done by the testing-framework itself.
 
 ## Quick Guide
 ```
-usage: python run_tests.py [-h] [-d] kauma_path
+usage: python run_tests.py [-h] [-d] [-dd] kauma_path
 
 kauma-testing-framework
 
 positional arguments:
-  kauma_path   Path of your kauma file
+  kauma_path           Path of your kauma file
 
 options:
-  -h, --help   show this help message and exit
-  -d, --debug  Activate extended debug mode
-
+  -h, --help           show this help message and exit
+  -d, --debug          Activate extended debug mode
+  -dd, --docker_debug  Enable debug messages for Docker execution
 ```
 
 ## Adding own testcases
