@@ -9,7 +9,7 @@ LINE_RED = '\033[91m'
 LINE_GREEN = '\033[92m'
 LINE_COLOR_END = '\033[0m'
 
-MAX_NAME_LEN = 35
+MAX_NAME_LEN = 32
 MAX_CASES_LEN = 48 # per line
 
 case_count = 0
@@ -59,9 +59,11 @@ def init_table_case(file_path: Path):
     global time_str
     global success_str
 
-    file_name = init_json(file_path).center(35)
+    file_name = init_json(file_path)
     if len(file_name) > MAX_NAME_LEN:
-        file_name = file_name[0:-3] + '...'
+        file_name = file_name[0:MAX_NAME_LEN] + '...'
+
+    file_name = file_name.center(MAX_NAME_LEN + 3)
 
     case_count = count_testcases()
     line_count = (case_count // MAX_CASES_LEN) + 1
