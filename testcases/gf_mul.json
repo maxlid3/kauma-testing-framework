@@ -1,0 +1,51 @@
+{
+  "testcases": {
+    "default_mul_p1": {
+        "action": "gf_mul",
+        "arguments": {
+            "a": "oAAAAoAAAoooAAAAAAAAAA==",
+            "b": "aAAAAoooooAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    },
+    "default_mul_p2": {
+        "action": "gf_mul",
+        "arguments": {
+            "a": "oAAAAoAAAoooAAAAAAAAAA==",
+            "b": "aAAAAoooooAAAAAAAAAAAA==",
+            "poly": "p2"
+        }
+    },
+    "zero1_mul": {
+        "action": "gf_mul",
+        "arguments": {
+            "a": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "b": "aAAAAoooooAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    },
+    "zero2_mul": {
+        "action": "gf_mul",
+        "arguments": {
+            "a": "oAAAAoAAAoooAAAAAAAAAA==",
+            "b": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p2"
+        }
+    },
+    "zero3_mul": {
+        "action": "gf_mul",
+        "arguments": {
+            "a": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "b": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    }
+  },
+  "expectedResults": {
+    "default_mul_p1": { "y": "cgAAA+Cii+eeCiAAiiiAiA==" },
+    "default_mul_p2": { "y": "cgAAA+Cii+eeCiAAiiiAiA==" },
+    "zero1_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" },
+    "zero2_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" },
+    "zero3_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" }
+  }
+}

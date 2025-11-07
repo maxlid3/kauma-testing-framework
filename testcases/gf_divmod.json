@@ -1,0 +1,46 @@
+{
+  "testcases": {
+    "default_divmod": {
+        "action": "gf_divmod",
+        "arguments": {
+            "a": "oAAAAoAAAoooAAAAAAAAAA==",
+            "b": "aAAAAoooooAAAAAAAAAAAA=="
+        }
+    },
+    "big_b_divmod": {
+        "action": "gf_divmod",
+        "arguments": {
+            "a": "aAAAAoooooAAAAAAAAAAAA==",
+            "b": "oAAAAoAAAoooAAAAAAAAAA=="
+        }
+    },
+    "zero_a_divmod": {
+        "action": "gf_divmod",
+        "arguments": {
+            "a": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "b": "oAAAAoAAAoooAAAAAAAAAA=="
+        }
+    },
+    "zero_b_divmod": {
+        "action": "gf_divmod",
+        "arguments": {
+            "a": "aAAAAoooooAAAAAAAAAAAA==",
+            "b": "AAAAAAAAAAAAAAAAAAAAAA=="
+        }
+    },
+    "r_zero_divmod": {
+        "action": "gf_divmod",
+        "arguments": {
+            "a": "aAAAAoooooAAAAAAAAAAAA==",
+            "b": "aAAAAoooooAAAAAAAAAAAA=="
+        }
+    }
+  },
+  "expectedResults": {
+    "default_divmod": {"q": "AAgAAAAAAAAAAAAAAAAAAA==", "r": "oAaAAoAooAAAAAAAAAAAAA=="},
+    "big_b_divmod": {"q": "AAAAAAAAAAAAAAAAAAAAAA==", "r": "aAAAAoooooAAAAAAAAAAAA=="},
+    "zero_a_divmod": {"q": "AAAAAAAAAAAAAAAAAAAAAA==", "r": "AAAAAAAAAAAAAAAAAAAAAA=="},
+    "zero_b_divmod": {"q": null, "r": null},
+    "even_divmod": {"q": "gAAAAAAAAAAAAAAAAAAAAA==", "r": "AAAAAAAAAAAAAAAAAAAAAA=="}
+  }
+}
