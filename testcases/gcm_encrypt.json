@@ -1,0 +1,118 @@
+{
+  "testcases": {
+    "default_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "ICAgIFNpbGtzb25nICAgIA==",
+        "ad": "SFc="
+      }
+    },
+    "default_encrypt_p2": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p2",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "ICAgIFNpbGtzb25nICAgIA==",
+        "ad": "SFc="
+      }
+    },
+    "long_plaintext_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "SG9sbG93IEtuaWdodDogU2lsa3Nvbmc=",
+        "ad": "SFc="
+      }
+    },
+    "long_plaintext_and_ad_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "SG9sbG93IEtuaWdodDogU2lsa3Nvbmc=",
+        "ad": "U2tvbmdTa29uZ1Nrb25nVmVyeVNrb25nSXdpbGxTa29uZ1lvdQ=="
+      }
+    },
+    "empty_plaintext_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "",
+        "ad": "SFc="
+      }
+    },
+    "empty_ad_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "SG9sbG93IEtuaWdodDogU2lsa3Nvbmc=",
+        "ad": ""
+      }
+    },
+    "empty_plaintext_and_ad_encrypt_p1": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "poly": "p1",
+        "nonce": "/H//Silksong//W/",
+        "key": "//Very//Secret//Key///==",
+        "plaintext": "",
+        "ad": ""
+      }
+    }
+  },
+  "expectedResults": {
+    "default_encrypt_p1": {
+      "ciphertext": "CtKcHrwAwT8OiZ+lnDUMcQ==",
+      "tag": "1oeX/iITonM5pWkAeHhVTQ==",
+      "L": "AAAAAAAAABAAAAAAAAAAgA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "default_encrypt_p2": {
+      "ciphertext": "CtKcHrwAwT8OiZ+lnDUMcQ==",
+      "tag": "IaeslQYHhNUibQO7yT4BJw==",
+      "L": "AAAAAAAAABAAAAAAAAAAgA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "long_plaintext_encrypt_p1": {
+      "ciphertext": "Yp3QUoAejR8Tj5aqyC8MAsHPc46vqV8=",
+      "tag": "7ajzN93NdWflR1n4Vkj+gQ==",
+      "L": "AAAAAAAAABAAAAAAAAAAuA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "long_plaintext_and_ad_encrypt_p1": {
+      "ciphertext": "Yp3QUoAejR8Tj5aqyC8MAsHPc46vqV8=",
+      "tag": "XeYGevZGTqhhguMjul5vOg==",
+      "L": "AAAAAAAAASgAAAAAAAAAuA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "empty_plaintext_encrypt_p1": {
+      "ciphertext": "",
+      "tag": "ZWwMi0Y/StnRh8ZsxK1a9A==",
+      "L": "AAAAAAAAABAAAAAAAAAAAA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "empty_ad_encrypt_p1": {
+      "ciphertext": "Yp3QUoAejR8Tj5aqyC8MAsHPc46vqV8=",
+      "tag": "czCcWRGhLBbG8lO1G9ANFg==",
+      "L": "AAAAAAAAAAAAAAAAAAAAuA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    },
+    "empty_plaintext_and_ad_encrypt_p1": {
+      "ciphertext": "",
+      "tag": "MbHNmRU6Uz6LwlW4RMaEmQ==",
+      "L": "AAAAAAAAAAAAAAAAAAAAAA==",
+      "H": "f+Ot1cAy1cJFbOTQ6FIrLw=="
+    }
+  }
+}
