@@ -4,7 +4,7 @@
         "action": "gf_mul",
         "arguments": {
             "a": "oAAAAoAAAoooAAAAAAAAAA==",
-            "b": "aAAAAoooooAAAAAAAAAAAA==",
+            "b": "PrIvipRL0tm/8ZhSJiryMw==",
             "poly": "p1"
         }
     },
@@ -12,7 +12,7 @@
         "action": "gf_mul",
         "arguments": {
             "a": "oAAAAoAAAoooAAAAAAAAAA==",
-            "b": "aAAAAoooooAAAAAAAAAAAA==",
+            "b": "X9pHge1l9uTMJGSoWq5lfQ==",
             "poly": "p2"
         }
     },
@@ -42,8 +42,8 @@
     }
   },
   "expectedResults": {
-    "default_mul_p1": { "y": "cgAAA+Cii+eeCiAAiiiAiA==" },
-    "default_mul_p2": { "y": "cgAAA+Cii+eeCiAAiiiAiA==" },
+    "default_mul_p1": { "y": "/HollowKnightSilksongw==" },
+    "default_mul_p2": { "y": "/HollowKnightSilksongw==" },
     "zero1_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" },
     "zero2_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" },
     "zero3_mul": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" }

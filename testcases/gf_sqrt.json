@@ -1,0 +1,30 @@
+{
+  "testcases": {
+    "default_sqrt_p1": {
+        "action": "gf_sqrt",
+        "arguments": {
+            "x": "XptCJ8LTbQOmKsknnI09jQ==",
+            "poly": "p1"
+        }
+    },
+    "default_sqrt_p2": {
+        "action": "gf_sqrt",
+        "arguments": {
+            "x": "NQenqwcwGLlUP5JrD2xhZw==",
+            "poly": "p2"
+        }
+    },
+    "zero_sqrt_p1": {
+        "action": "gf_sqrt",
+        "arguments": {
+            "x": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    }
+  },
+  "expectedResults": {
+    "default_sqrt_p1": { "y": "/HollowKnightSilksongw==" },
+    "default_sqrt_p2": { "y": "/HollowKnightSilksongw==" },
+    "zero_sqrt_p1": { "y": "AAAAAAAAAAAAAAAAAAAAAA==" }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "testcases": {
+    "default_inv_p1": {
+        "action": "gf_inv",
+        "arguments": {
+            "x": "yM3yupqmcQ+Zo1ND1LVAEg==",
+            "poly": "p1"
+        }
+    },
+    "default_inv_p2": {
+        "action": "gf_inv",
+        "arguments": {
+            "x": "MAfFE2AMcYYksmlOecFRBw==",
+            "poly": "p2"
+        }
+    },
+    "zero_inv_p1": {
+        "action": "gf_inv",
+        "arguments": {
+            "x": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    },
+    "zero_inv_p2": {
+        "action": "gf_inv",
+        "arguments": {
+            "x": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p2"
+        }
+    }
+  },
+  "expectedResults": {
+    "default_inv_p1": { "y": "/HollowKnightSilksongw==" },
+    "default_inv_p2": { "y": "/HollowKnightSilksongw==" },
+    "zero_inv_p1": { "y": null },
+    "zero_inv_p2": { "y": null }
+  }
+}

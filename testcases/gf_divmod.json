@@ -41,6 +41,6 @@
     "big_b_divmod": {"q": "AAAAAAAAAAAAAAAAAAAAAA==", "r": "aAAAAoooooAAAAAAAAAAAA=="},
     "zero_a_divmod": {"q": "AAAAAAAAAAAAAAAAAAAAAA==", "r": "AAAAAAAAAAAAAAAAAAAAAA=="},
     "zero_b_divmod": {"q": null, "r": null},
-    "even_divmod": {"q": "gAAAAAAAAAAAAAAAAAAAAA==", "r": "AAAAAAAAAAAAAAAAAAAAAA=="}
+    "r_zero_divmod": {"q": "gAAAAAAAAAAAAAAAAAAAAA==", "r": "AAAAAAAAAAAAAAAAAAAAAA=="}
   }
 }

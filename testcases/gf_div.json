@@ -1,0 +1,42 @@
+{
+  "testcases": {
+    "default_div_p1": {
+        "action": "gf_div",
+        "arguments": {
+            "a": "gAlULR07YLX8OKy2Sr44vQ==",
+            "b": "oAAAAoAAAoooAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    },
+    "default_div_p2": {
+        "action": "gf_div",
+        "arguments": {
+            "a": "aldGY/KuPoI2x5KwhNeoDA==",
+            "b": "oAAAAoAAAoooAAAAAAAAAA==",
+            "poly": "p2"
+        }
+    },
+    "zero1_div": {
+        "action": "gf_div",
+        "arguments": {
+            "a": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "b": "oAAAAoAAAoooAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    },
+    "zero2_div": {
+        "action": "gf_div",
+        "arguments": {
+            "a": "oAAAAoAAAoooAAAAAAAAAA==",
+            "b": "AAAAAAAAAAAAAAAAAAAAAA==",
+            "poly": "p1"
+        }
+    }
+  },
+  "expectedResults": {
+    "default_div_p1": { "q": "/HollowKnightSilksongw==" },
+    "default_div_p2": { "q": "/HollowKnightSilksongw==" },
+    "zero1_div": { "q": "AAAAAAAAAAAAAAAAAAAAAA==" },
+    "zero2_div": { "q": null }
+  }
+}
