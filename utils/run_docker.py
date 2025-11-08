@@ -91,7 +91,10 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
 
             for line in process.stdout:
-                update_case(line)
+                try:
+                    update_case(line)
+                except KeyError as err:
+                    print(f'Missing key {err} in \'expectedResults\' in case \'{case}\'', end='', file=sys.stderr)
 
             # If all or the last cases are missing, one more update is needed
             update_case("{ \"id\": null, \"reply\": null }")
