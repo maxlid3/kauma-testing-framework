@@ -6,6 +6,8 @@ import subprocess
 import shutil
 from pathlib import Path
 
+import traceback
+
 from .print_table import *
 
 def create_tar(src_path: str, testcase_list: list):
@@ -108,7 +110,10 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
         if debug:
             print_debug()
     except KeyboardInterrupt:
-        print("Received KeyboardInterrupt, stopping and removing containers...")
+        print("\nReceived KeyboardInterrupt, stopping and removing containers...")
+    except Exception as err:
+        print("testing-framework crashed:", err)
+        traceback.print_exc()
     finally:
         if container_id is not None:
             stop_and_rm_container(container_id, docker_debug)
