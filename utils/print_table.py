@@ -11,6 +11,7 @@ LINE_COLOR_END = '\033[0m'
 
 MAX_NAME_LEN = 32
 MAX_CASES_LEN = 48 # per line
+MAX_LINE_LEN = 25
 
 case_count = 0
 line_count = 0
@@ -66,7 +67,7 @@ def init_table_case(file_path: Path):
     file_name = file_name.center(MAX_NAME_LEN + 3)
 
     case_count = count_testcases()
-    line_count = (case_count // MAX_CASES_LEN) + 1
+    line_count = ((case_count + MAX_CASES_LEN -1) // MAX_CASES_LEN)
 
     case_index = 0
     line_index = 0
