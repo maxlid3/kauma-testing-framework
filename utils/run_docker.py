@@ -90,13 +90,20 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             start = time.time()
 
             command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            stdout, stderr = process.communicate()
 
-            for line in process.stdout:
+            for line in stdout.splitlines():
                 try:
                     update_case(line)
                 except KeyError as err:
                     print(f'Missing key {err} in \'expectedResults\' in case \'{case}\'', end='', file=sys.stderr)
+
+            traceback_str = None
+            if process.returncode != 0:
+                for line in stderr.splitlines():
+                    if "Traceback" in line:
+                        traceback_str = stderr
 
             # If all or the last cases are missing, one more update is needed
             update_case("{ \"id\": null, \"reply\": null }")
@@ -106,7 +113,7 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             update_time(str(round(duration, 3)) + 's')
 
             if debug:
-                add_debug_case()
+                add_debug_case(traceback_str)
         if debug:
             print_debug()
     except KeyboardInterrupt:

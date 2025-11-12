@@ -1,4 +1,5 @@
 import json
+import traceback
 from pathlib import Path
 
 from .json_utils import *
@@ -40,6 +41,7 @@ prev_sum_of_symbols = 0
 case_list = []
 
 debug_str = ''
+traceback_str = ''
 
 name_str = ''
 cases_str_list = []
@@ -256,7 +258,7 @@ def update_time(time: str):
     for i in range(1, len(cases_str_list[1:]) + 1):
         print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
 
-def add_debug_case():
+def add_debug_case(traceback_str: str):
     global name_str
     global failed_list
     global missing_list
@@ -273,6 +275,8 @@ def add_debug_case():
         missing.append('...')
     
     debug_str += f'{name}:\n    Failed:  {(', '.join(failed)) if failed_list else 'None'}\n    Missing: {(', '.join(missing)) if missing_list else 'None'}\n'
+    if traceback_str:
+        debug_str += f'    kauma crashed:\n{traceback_str}'
 
 def print_debug():
     print('-' * 113, flush=True)
