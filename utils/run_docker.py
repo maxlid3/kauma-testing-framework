@@ -2,6 +2,7 @@ import sys
 import time
 import tarfile
 import tempfile
+import threading
 import subprocess
 import shutil
 from pathlib import Path
@@ -54,9 +55,19 @@ def stop_and_rm_container(container_id: str, docker_debug: bool = False):
         if docker_debug:
             print(f"Removed Docker container with id '{container_id[:13]}...'.")
 
-
-
 def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
+    def handle_stdout(line: str):
+        try:
+            update_case(line)
+        except KeyError as err:
+            print(f"Missing key {err} in 'expectedResults' in case '{case}'", end='', file=sys.stderr)
+
+    def handle_stderr(line: str):
+        global traceback_str
+        if process.returncode != 0:
+            if "Traceback" in line:
+                traceback_str = line
+
     container_id = None
     try:
         try:
@@ -91,19 +102,18 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
 
             command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            stdout, stderr = process.communicate()
 
-            for line in stdout.splitlines():
-                try:
-                    update_case(line)
-                except KeyError as err:
-                    print(f'Missing key {err} in \'expectedResults\' in case \'{case}\'', end='', file=sys.stderr)
 
             traceback_str = None
-            if process.returncode != 0:
-                for line in stderr.splitlines():
-                    if "Traceback" in line:
-                        traceback_str = stderr
+
+            t_out = threading.Thread(target=lambda: [handle_stdout(line.rstrip('\n')) for line in process.stdout])          
+            t_err = threading.Thread(target=lambda: [handle_stderr(line.rstrip('\n')) for line in process.stderr])
+
+            t_out.start()
+            t_err.start()
+
+            t_out.join()
+            t_err.join()
 
             # If all or the last cases are missing, one more update is needed
             update_case("{ \"id\": null, \"reply\": null }")
