@@ -55,19 +55,24 @@ def stop_and_rm_container(container_id: str, docker_debug: bool = False):
         if docker_debug:
             print(f"Removed Docker container with id '{container_id[:13]}...'.")
 
-def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
-    def handle_stdout(line: str):
+def make_handle_stdout(case):
+    def handle_stdout(line):
         try:
             update_case(line)
         except KeyError as err:
             print(f"Missing key {err} in 'expectedResults' in case '{case}'", end='', file=sys.stderr)
+    return handle_stdout
 
-    def handle_stderr(line: str):
-        global traceback_str
-        if process.returncode != 0:
-            if "Traceback" in line:
-                traceback_str = line
+def make_handle_stderr(traceback_str):
+    def handle_stderr(line):
+        if "Traceback" in line:
+            traceback_str.append(line)
+        elif traceback_str:
+            traceback_str.append(line)
+    return handle_stderr
 
+
+def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
     container_id = None
     try:
         try:
@@ -103,11 +108,13 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             command = ["docker", "exec", container_id, "bash", "-c", f"./kauma {case.name}"]
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
+            traceback_str = []
 
-            traceback_str = None
+            handle_stdout = make_handle_stdout(case)
+            handle_stderr = make_handle_stderr(traceback_str)
 
-            t_out = threading.Thread(target=lambda: [handle_stdout(line.rstrip('\n')) for line in process.stdout])          
-            t_err = threading.Thread(target=lambda: [handle_stderr(line.rstrip('\n')) for line in process.stderr])
+            t_out = threading.Thread(target=lambda: [handle_stdout(line) for line in process.stdout])          
+            t_err = threading.Thread(target=lambda: [handle_stderr(line) for line in process.stderr])
 
             t_out.start()
             t_err.start()
@@ -123,7 +130,7 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
             update_time(str(round(duration, 3)) + 's')
 
             if debug:
-                add_debug_case(traceback_str)
+                add_debug_case(''.join(traceback_str))
         if debug:
             print_debug()
     except KeyboardInterrupt:
