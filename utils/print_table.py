@@ -213,7 +213,7 @@ def update_case(output: str):
     for i in range(1, len(cases_str_list[1:]) + 1):
         print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
 
-    if case_index % 48 == 0:
+    if case_index % MAX_CASES_LEN == 0:
         prev_sum_of_symbols = (passed_count + len(failed_list)) * 9
 
 def update_time(time: str):
