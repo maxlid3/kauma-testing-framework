@@ -3,7 +3,7 @@ import argparse
 import platform
 from pathlib import Path
 
-from utils import run_docker
+from utils import run_docker, run_nodocker
 
 def gen_testcase_list():
     base = Path(__file__).parent
@@ -23,6 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('kauma_path', help='Path of your kauma file')
     parser.add_argument('-d', '--debug', action='store_true', help='Activate extended debug mode')
     parser.add_argument('-dd', '--docker_debug', action='store_true', help='Enable debug messages for Docker commands')
+    parser.add_argument('-nd', '--no_docker', action='store_true', help='Run testing-framework without docker.')
     
     try:
         args = parser.parse_args()
@@ -38,4 +39,7 @@ if __name__ == "__main__":
     if platform.system() == "Windows":
         os_windows = True
     
-    run_docker(kauma_path, testcase_list, args.debug, args.docker_debug, os_windows)
+    if args.no_docker:
+        run_nodocker(kauma_path, testcase_list, args.debug)
+    else:
+        run_docker(kauma_path, testcase_list, args.debug, args.docker_debug, os_windows)

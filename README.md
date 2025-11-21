@@ -10,6 +10,7 @@ This testing-framework works for **Python implementations** on **Windows and Lin
 - [Python](https://www.python.org/downloads/release/python-3140/)
 - [Docker](https://www.docker.com/get-started/)
     - ["labwork" Docker-container](https://github.com/johndoe31415/labwork-docker)
+- If testing without Docker: `pip install cryptography`
 
 <details>
 <summary>Installing the "labwork" Docker-container</summary>
@@ -26,7 +27,7 @@ Running the labwork-container will be done by the testing-framework itself.
 
 ## Quick Guide
 ```
-usage: python run_tests.py [-h] [-d] [-dd] kauma_path
+usage: python run_tests.py [-h] [-d] [-dd] [-nd] kauma_path
 
 kauma-testing-framework
 
@@ -37,6 +38,7 @@ options:
   -h, --help           show this help message and exit
   -d, --debug          Activate extended debug mode
   -dd, --docker_debug  Enable debug messages for Docker execution
+  -nd, --no_docker     Run testing-framework without docker.
 ```
 
 ## Adding own testcases
