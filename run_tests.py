@@ -5,16 +5,37 @@ from pathlib import Path
 
 from utils import run_docker, run_nodocker
 
-def gen_testcase_list():
+def gen_testcase_list(included_list: list, excluded_list: list) -> list:
     base = Path(__file__).parent
     testcase_list = []
+
     for item in Path(base / 'testcases').iterdir():
-        testcase_list.append(Path(item))
+        include_match = (
+            not included_list or
+            any(item.name.startswith(prefix) for prefix in included_list)
+        )
+        exclude_match = (
+            not excluded_list or
+            not any(item.name.startswith(prefix) for prefix in excluded_list)
+        )
+
+        if include_match and exclude_match:
+            testcase_list.append(Path(item))
 
     for item in Path(base / 'ext_testcases').iterdir():
         if item.name == ".gitignore":
             continue
-        testcase_list.append(Path(item))
+        include_match = (
+            not included_list or
+            any(item.name.startswith(prefix) for prefix in included_list)
+        )
+        exclude_match = (
+            not excluded_list or
+            not any(item.name.startswith(prefix) for prefix in excluded_list)
+        )
+
+        if include_match and exclude_match:
+            testcase_list.append(Path(item))
 
     return testcase_list
 
@@ -24,6 +45,8 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--debug', action='store_true', help='Activate extended debug mode')
     parser.add_argument('-dd', '--docker_debug', action='store_true', help='Enable debug messages for Docker commands')
     parser.add_argument('-nd', '--no_docker', action='store_true', help='Run testing-framework without docker.')
+    parser.add_argument('-i', '--include', nargs='*', metavar='text', help='Filter: Include all testcases which start with <arguments>. (Useable with --exclude)')
+    parser.add_argument('-e', '--exclude', nargs='*', metavar='text', help='Filter: Exclude all testcases which start with <arguments>. (Useable with --include)')
     
     try:
         args = parser.parse_args()
@@ -31,8 +54,7 @@ if __name__ == "__main__":
         print()
         sys.exit(1)
 
-
-    testcase_list = gen_testcase_list()
+    testcase_list = gen_testcase_list(args.include, args.exclude)
     kauma_path = Path(args.kauma_path)
 
     os_windows = False
