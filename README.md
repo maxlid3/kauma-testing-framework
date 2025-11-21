@@ -39,6 +39,10 @@ options:
   -d, --debug          Activate extended debug mode
   -dd, --docker_debug  Enable debug messages for Docker execution
   -nd, --no_docker     Run testing-framework without docker.
+  -i, --include [text ...]
+                        Filter: Include all testcases which start with <arguments>. (Useable with --exclude)
+  -e, --exclude [text ...]
+                        Filter: Exclude all testcases which start with <arguments>. (Useable with --include)
 ```
 
 ## Adding own testcases
