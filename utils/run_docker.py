@@ -134,6 +134,7 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
         if debug:
             print_debug()
     except KeyboardInterrupt:
+        print_debug()
         print("\nReceived KeyboardInterrupt, stopping and removing containers...")
     except Exception as err:
         print("testing-framework crashed:", err)

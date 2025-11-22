@@ -62,6 +62,7 @@ def run_nodocker(kauma_path: str ,testcase_list: list, debug: bool = False):
         rm_tmpdir(tmpdir)
 
     except KeyboardInterrupt:
+        print_debug()
         print("\nReceived KeyboardInterrupt.")
         rm_tmpdir(tmpdir)
     except Exception as err:
