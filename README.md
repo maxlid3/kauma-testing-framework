@@ -44,6 +44,8 @@ options:
                         Filter: Include all testcases which start with <arguments>. (Useable with --exclude)
   -e, --exclude [text ...]
                         Filter: Exclude all testcases which start with <arguments>. (Useable with --include)
+  -pl, --print_log [<name>.log]
+                        Print a log of the cases. Leave empty for default name 'kauma.log' or enter name.
 ```
 
 ## Adding own testcases

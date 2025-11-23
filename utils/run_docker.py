@@ -74,7 +74,7 @@ def make_handle_stderr(traceback_str):
     return handle_stderr
 
 
-def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
+def run_docker(kauma_path: str, testcase_list: list, log_name: str, debug: bool = False, docker_debug: bool = False, os_windows: bool = False):
     container_id = None
     try:
         try:
@@ -129,7 +129,7 @@ def run_docker(kauma_path: str, testcase_list: list, debug: bool = False, docker
 
             duration = time.time() - start
             process.wait()
-            update_time(str(round(duration, 3)) + 's')
+            update_time(str(round(duration, 3)) + 's', log_name)
 
             if debug:
                 add_debug_case(''.join(traceback_str))

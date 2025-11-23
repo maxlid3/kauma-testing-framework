@@ -48,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument('-l', "--list", action='store_true', help='List all available testcases. (Useable with --include and --exclude)')
     parser.add_argument('-i', '--include', nargs='*', metavar='text', help='Filter: Include all testcases which start with <arguments>. (Useable with --exclude)')
     parser.add_argument('-e', '--exclude', nargs='*', metavar='text', help='Filter: Exclude all testcases which start with <arguments>. (Useable with --include)')
+    parser.add_argument('-pl', '--print_log', nargs='?', const='kauma', default=None, metavar='<name>.log',  help='Print a log of the cases. Leave empty for default name \'kauma.log\' or enter name.')
     
     try:
         args = parser.parse_args()
@@ -66,8 +67,8 @@ if __name__ == "__main__":
     os_windows = False
     if platform.system() == "Windows":
         os_windows = True
-    
+
     if args.no_docker:
-        run_nodocker(kauma_path, testcase_list, args.debug)
+        run_nodocker(kauma_path, testcase_list, args.print_log, args.debug)
     else:
-        run_docker(kauma_path, testcase_list, args.debug, args.docker_debug, os_windows)
+        run_docker(kauma_path, testcase_list, args.print_log, args.debug, args.docker_debug, os_windows)

@@ -18,7 +18,7 @@ def rm_tmpdir(tmpdir):
     except Exception as err:
             print("Error deleting tempdir:", err)
 
-def run_nodocker(kauma_path: str ,testcase_list: list, debug: bool = False):
+def run_nodocker(kauma_path: str ,testcase_list: list, log_name: str, debug: bool = False):
     try:
         tar_path, tmpdir = create_tar(kauma_path, testcase_list)
 
@@ -52,7 +52,7 @@ def run_nodocker(kauma_path: str ,testcase_list: list, debug: bool = False):
 
             duration = time.time() - start
             process.wait()
-            update_time(str(round(duration, 3)) + 's')
+            update_time(str(round(duration, 3)) + 's', log_name)
 
             if debug:
                 add_debug_case(''.join(traceback_str))

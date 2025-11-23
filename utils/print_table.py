@@ -216,7 +216,7 @@ def update_case(output: str):
     if case_index % MAX_CASES_LEN == 0:
         prev_sum_of_symbols = (passed_count + len(failed_list)) * 9
 
-def update_time(time: str):
+def update_time(time: str, log_name: str):
     global line_count
 
     global name_str
@@ -257,6 +257,13 @@ def update_time(time: str):
 
     for i in range(1, len(cases_str_list[1:]) + 1):
         print((' ' * len(name_str)) + ' ' + cases_str_list[i] + ' ' + (' ' * len(time_str)) + ' ' + (' ' * len(success_str)), end='\n', flush=True)
+
+    if log_name != None:
+        log_dir = Path(__file__).resolve().parent.parent
+        log_file = log_dir / f'{log_name}.log'
+        message = f'{name_str}: {time_str} {success_str}'
+        with open(log_file, 'a', encoding='utf-8') as f:
+            f.write(f'{message}\n')
 
 def add_debug_case(traceback_str: str):
     global name_str
