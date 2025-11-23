@@ -61,6 +61,8 @@ def make_handle_stdout(case):
             update_case(line)
         except KeyError as err:
             print(f"Missing key {err} in 'expectedResults' in case '{case}'", end='', file=sys.stderr)
+        except TypeError as err:
+            print(f"Wrong formatted output for case '{case}'!", end='', file=sys.stderr)
     return handle_stdout
 
 def make_handle_stderr(traceback_str):
