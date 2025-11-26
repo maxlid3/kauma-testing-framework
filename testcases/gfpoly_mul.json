@@ -1,0 +1,94 @@
+{
+  "testcases": {
+    "default1_mul_p1": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "B": ["IsTheAAAAAAAAAAAAAAAAA==", "BestAAAAAAAAAAAAAAAAAA=="],
+        "poly": "p1"
+      }
+    },
+    "default1_mul_p2": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "B": ["IsTheAAAAAAAAAAAAAAAAA==", "BestAAAAAAAAAAAAAAAAAA=="],
+        "poly": "p2"
+      }
+    },
+    "default2_mul_p1": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": ["IsTheAAAAAAAAAAAAAAAAA==", "BestAAAAAAAAAAAAAAAAAA=="],
+        "B": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "poly": "p1"
+      }
+    },
+    "edge1_mul_p1": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "B": ["gAAAAAAAAAAAAAAAAAAAAA=="],
+        "poly": "p1"
+      }
+    },
+    "edge2_mul_p1": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": ["gAAAAAAAAAAAAAAAAAAAAA=="],
+        "B": ["gAAAAAAAAAAAAAAAAAAAAA=="],
+        "poly": "p1"
+      }
+    }
+  },
+  "expectedResults": {
+    "default1_mul_p1": {
+      "P": [
+        "B8lTOlAYURAAAAAAAAAAAA==",
+        "Ctd3StjjVcsAAAAAAAAAAA==",
+        "Ev9QAIBif8TqAAAAAAAAAA==",
+        "Ar2k7/A/efrAAAAAAAAAAA=="
+      ]
+    },
+    "default1_mul_p2": {
+      "P": [
+        "B8lTOlAYURAAAAAAAAAAAA==",
+        "Ctd3StjjVcsAAAAAAAAAAA==",
+        "Ev9QAIBif8TqAAAAAAAAAA==",
+        "Ar2k7/A/efrAAAAAAAAAAA=="
+      ]
+    },
+    "default2_mul_p1": {
+      "P": [
+        "B8lTOlAYURAAAAAAAAAAAA==",
+        "Ctd3StjjVcsAAAAAAAAAAA==",
+        "Ev9QAIBif8TqAAAAAAAAAA==",
+        "Ar2k7/A/efrAAAAAAAAAAA=="
+      ]
+    },
+    "edge1_mul_p1": {
+      "P": [
+        "HollowAAAAAAAAAAAAAAAA==",
+        "KnightAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA=="
+      ]
+    },
+    "edge2_mul_p1": { "P": ["gAAAAAAAAAAAAAAAAAAAAA=="] }
+  }
+}

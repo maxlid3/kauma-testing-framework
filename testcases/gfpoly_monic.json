@@ -1,0 +1,66 @@
+{
+  "testcases": {
+    "default_monic_p1": {
+      "action": "gfpoly_monic",
+      "arguments": {
+        "A": [
+          "AhxKpk7tODWMUUjoYOgAAA==",
+          "B55WzV4IDSIJ1kmLt3+AAA==",
+          "DS85Rb9gslls0GZWkbLJAA==",
+          "GameOfTheYearAAAAAAAAA=="
+        ],
+        "poly": "p1"
+      }
+    },
+    "default_monic_p2": {
+      "action": "gfpoly_monic",
+      "arguments": {
+        "A": [
+          "AhxKpk7tODWMUUjoYOgAAA==",
+          "B55WzV4IDSIJ1kmLt3+AAA==",
+          "DS85Rb9gslls0GZWkbLJAA==",
+          "GameOfTheYearAAAAAAAAA=="
+        ],
+        "poly": "p2"
+      }
+    },
+    "edge1_monic_p1": {
+      "action": "gfpoly_monic",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA==",
+          "gAAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "poly": "p1"
+      }
+    }
+  },
+  "expectedResults": {
+    "default_monic_p1": {
+      "A*": [
+        "HollowAAAAAAAAAAAAAAAA==",
+        "KnightAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA==",
+        "gAAAAAAAAAAAAAAAAAAAAA=="
+      ]
+    },
+    "default_monic_p2": {
+      "A*": [
+        "HollowAAAAAAAAAAAAAAAA==",
+        "KnightAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA==",
+        "gAAAAAAAAAAAAAAAAAAAAA=="
+      ]
+    },
+    "edge1_monic_p1": {
+      "A*": [
+        "HollowAAAAAAAAAAAAAAAA==",
+        "KnightAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA==",
+        "gAAAAAAAAAAAAAAAAAAAAA=="
+      ]
+    }
+  }
+}

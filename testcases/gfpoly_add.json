@@ -1,0 +1,68 @@
+{
+  "testcases": {
+    "default1_add": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "B": ["IsTheAAAAAAAAAAAAAAAAA==", "BestAAAAAAAAAAAAAAAAAA=="]
+      }
+    },
+    "default2_add": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": ["IsTheAAAAAAAAAAAAAAAAA==", "BestAAAAAAAAAAAAAAAAAA=="],
+        "B": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ]
+      }
+    },
+    "edge1_add": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "HollowAAAAAAAAAAAAAAAA==",
+          "KnightAAAAAAAAAAAAAAAA==",
+          "SilksongAAAAAAAAAAAAAA=="
+        ],
+        "B": ["gAAAAAAAAAAAAAAAAAAAAA=="]
+      }
+    },
+    "edge2_add": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": ["gAAAAAAAAAAAAAAAAAAAAA=="],
+        "B": ["gAAAAAAAAAAAAAAAAAAAAA=="]
+      }
+    }
+  },
+  "expectedResults": {
+    "default1_add": {
+      "S": [
+        "PE2E2wAAAAAAAAAAAAAAAA==",
+        "L5ONhtAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA=="
+      ]
+    },
+    "default2_add": {
+      "S": [
+        "PE2E2wAAAAAAAAAAAAAAAA==",
+        "L5ONhtAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA=="
+      ]
+    },
+    "edge1_add": {
+      "S": [
+        "nollowAAAAAAAAAAAAAAAA==",
+        "KnightAAAAAAAAAAAAAAAA==",
+        "SilksongAAAAAAAAAAAAAA=="
+      ]
+    },
+    "edge2_add": { "S": ["AAAAAAAAAAAAAAAAAAAAAA=="] }
+  }
+}
