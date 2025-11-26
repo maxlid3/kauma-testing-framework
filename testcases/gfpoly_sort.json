@@ -1,0 +1,82 @@
+{
+  "testcases": {
+    "default_sort1": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "default_sort2": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "gAAAAAAAAAAAAAAAAAAAAQ=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "gAAAAAAAAAAAAAAAAAAAAQ==",
+            "gAAAAAAAAAAAAAAAAAAAAg=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA==",
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    }
+  },
+  "expectedResults": {
+    "default_sort1": {
+      "sorted": [
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      ]
+    },
+    "default_sort2": {
+      "sorted": [
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "gAAAAAAAAAAAAAAAAAAAAQ==",
+          "gAAAAAAAAAAAAAAAAAAAAg=="
+        ],
+        [
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "gAAAAAAAAAAAAAAAAAAAAQ=="
+        ]
+      ]
+    }
+  }
+}
